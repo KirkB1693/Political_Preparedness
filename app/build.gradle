@@ -18,7 +18,13 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug{
+            // TODO - replace POLITICAL_PREPAREDNESS_API_KEY with a valid API_KEY in order to have code work
+            buildConfigField 'String', "CIVICS_API_KEY", POLITICAL_PREPAREDNESS_API_KEY
+        }
         release {
+            // TODO - replace POLITICAL_PREPAREDNESS_API_KEY with a valid API_KEY in order to have code work
+            buildConfigField 'String', "CIVICS_API_KEY", POLITICAL_PREPAREDNESS_API_KEY
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
