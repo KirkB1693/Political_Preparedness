@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Political Preparedness</string>
+    <string name="upcoming_elections_button_text">Upcoming Elections</string>
+    <string name="find_my_representatives_button">Find My Representatives</string>
+    <string name="use_my_location_button">Use My Location</string>
+    <string name="casting_ballot_image_content_description">Casting Ballot</string>
+    <string name="saved_elections_header">Saved Elections</string>
+    <string name="upcoming_elections_header">Upcoming Elections</string>
+    <string name="follow_election_button">Follow Election</string>
+    <string name="unfollow_election_button">Unfollow Election</string>
+    <string name="state_header_text">Election Information</string>
+    <string name="state_locations_text">Voting Locations</string>
+    <string name="state_ballot_text">Ballot Information</string>
+    <string name="state_correspondence_header_text">Secretary of State</string>
+    <string name="voter_info_address_text">555 Main St, Anytown, WI 99999</string>
+    <string name="representative_search_title">Represtntative Search</string>
+    <string name="my_representatives_title">My Representatives</string>
+    <string name="street_address_hint">address line 1</string>
+    <string name="extended_address_hint">address line 2</string>
+    <string name="address_locality_hint">City</string>
+    <string name="postal_code_hint">Zip Code</string>
+    <string name="representative_image_content_description">Representative Photo</string>
+    <string name="web_search_image_content_description">Web Search</string>
+    <string name="facebook_image_content_description">Facebook</string>
+    <string name="twitter_image_content_description">Twitter</string>
+    <string name="no_state_for_voter_info_error">Unable to get detailed voter info, no state was listed by the Civics API</string>
+
+</resources>
