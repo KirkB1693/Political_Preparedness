@@ -33,6 +33,7 @@ class VoterInfoFragment : Fragment() {
             this, viewModelFactory
         ).get(VoterInfoViewModel::class.java)
         binding.viewModel = viewModel
+        binding.fragment = this
 
         if (division.state.isNotEmpty()) {
             viewModel.getVoterInfo(division.state, electionId)
@@ -44,27 +45,34 @@ class VoterInfoFragment : Fragment() {
             if (it.equals(VoterInfoApiStatus.DONE)) {
                 val voterInfo = viewModel.voterInfo.value
                 if (voterInfo != null) {
-                    val election = voterInfo.election
-                    binding.electionName.title = election.name
-                    binding.electionDate.text = election.electionDay.toString()
                     displayElectionOfficialInfo(voterInfo)
-                    displayVotingLocations(voterInfo)
-                    displayBallotInformation(voterInfo)
                 } else {
                     binding.electionName.title = ""
                     binding.electionDate.text = ""
                     binding.address.visibility = View.GONE
                     binding.stateCorrespondenceHeader.visibility = View.GONE
-                    binding.stateLocations.visibility = View.GONE
-                    binding.stateBallot.visibility = View.GONE
                     binding.followOrUnfollowElectionButton.visibility = View.GONE
                 }
 
             }
         })
 
+        viewModel.ballotInformationUrl.observe(viewLifecycleOwner, Observer {
+            if (it.isNullOrEmpty()) {
+                binding.stateBallot.visibility = View.GONE
+             } else {
+                binding.stateBallot.visibility = View.VISIBLE
+            }
+        })
 
-        //TODO: Handle loading of URLs
+        viewModel.votingLocationsUrl.observe(viewLifecycleOwner, Observer {
+            if (it.isNullOrEmpty()) {
+                binding.stateLocations.visibility = View.GONE
+            } else {
+                binding.stateLocations.visibility = View.VISIBLE
+            }
+        })
+
 
         viewModel.initializeIsElectionSaved(electionId)
         viewModel.isElectionSaved.observe(viewLifecycleOwner, Observer {
@@ -87,52 +95,13 @@ class VoterInfoFragment : Fragment() {
         return binding.root
     }
 
-    private fun displayBallotInformation(voterInfo: VoterInfoResponse) {
-        if (voterInfo.state != null) {
-            if (voterInfo.state[0].electionAdministrationBody.ballotInfoUrl != null) {
-                binding.stateBallot.visibility = View.VISIBLE
-                binding.stateBallot.setOnClickListener{
-                    voterInfo.state[0].electionAdministrationBody.ballotInfoUrl?.let { url ->
-                        openWebPage(
-                            url
-                        )
-                    }
-                }
-            } else {
-                binding.stateBallot.visibility = View.GONE
-            }
-        }
-    }
 
 
-
-
-    private fun displayVotingLocations(voterInfo: VoterInfoResponse) {
-        if (voterInfo.state != null) {
-            if (voterInfo.state[0].electionAdministrationBody.votingLocationFinderUrl != null) {
-                binding.stateLocations.visibility = View.VISIBLE
-                binding.stateLocations.setOnClickListener{
-                    voterInfo.state[0].electionAdministrationBody.votingLocationFinderUrl?.let { url ->
-                        openWebPage(
-                            url
-                        )
-                    }
-                }
-            } else {
-                binding.stateLocations.visibility = View.GONE
-            }
-        }
-    }
 
     private fun displayElectionOfficialInfo(voterInfo: VoterInfoResponse) {
         if (voterInfo.state != null) {
             binding.stateCorrespondenceHeader.visibility = View.VISIBLE
-            binding.stateCorrespondenceHeader.text =
-                voterInfo.state[0].electionAdministrationBody.name
             binding.address.visibility = View.VISIBLE
-            binding.address.text =
-                voterInfo.state[0].electionAdministrationBody.correspondenceAddress?.toFormattedString()
-                    ?: ""
         } else {
             binding.stateCorrespondenceHeader.visibility = View.GONE
             binding.address.visibility = View.GONE
@@ -160,11 +129,16 @@ class VoterInfoFragment : Fragment() {
         binding.followOrUnfollowElectionButton.text = getString(R.string.unfollow_election_button)
     }
 
+
     private fun openWebPage(url: String) {
         val webpage: Uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, webpage)
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(intent)
         }
+    }
+
+    fun onClick(url: String) {
+        openWebPage(url)
     }
 }

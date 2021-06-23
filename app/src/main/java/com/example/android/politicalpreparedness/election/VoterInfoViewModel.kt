@@ -25,13 +25,14 @@ class VoterInfoViewModel(private val dataSource: ElectionDao) : ViewModel() {
     val voterInfoStatus: LiveData<VoterInfoApiStatus>
         get() = _voterInfoStatus
 
-    //TODO: Add var and methods to populate voter info
     fun getVoterInfo(address: String, electionId: Long) {
         _voterInfoStatus.value = VoterInfoApiStatus.LOADING
         viewModelScope.launch {
             try {
                 _voterInfo.value = CivicsApi.retrofitService.getVoterInfo(address, electionId)
                 _voterInfoStatus.value = VoterInfoApiStatus.DONE
+                _votingLocationsUrl.value = extractVotingLocationsUrl()
+                _ballotInformationUrl.value = extractBallotInformationUrl()
             } catch (e: Exception) {
                 _voterInfoStatus.value = VoterInfoApiStatus.ERROR
                 _voterInfo.value = null
@@ -41,8 +42,9 @@ class VoterInfoViewModel(private val dataSource: ElectionDao) : ViewModel() {
 
     }
 
-
-    var votingLocationsUrl: String? = extractVotingLocationsUrl()
+    private val _votingLocationsUrl = MutableLiveData<String>()
+    val votingLocationsUrl: LiveData<String>
+    get() = _votingLocationsUrl
 
     private fun extractVotingLocationsUrl(): String? {
         if (_voterInfoStatus.value == VoterInfoApiStatus.DONE && _voterInfo.value != null) {
@@ -51,7 +53,9 @@ class VoterInfoViewModel(private val dataSource: ElectionDao) : ViewModel() {
         return null
     }
 
-    var ballotInformationUrl: String? = extractBallotInformationUrl()
+    private val _ballotInformationUrl = MutableLiveData<String>()
+    val ballotInformationUrl: LiveData<String>
+    get() = _ballotInformationUrl
 
     private fun extractBallotInformationUrl(): String? {
         if (_voterInfoStatus.value == VoterInfoApiStatus.DONE && _voterInfo.value != null) {
@@ -61,8 +65,6 @@ class VoterInfoViewModel(private val dataSource: ElectionDao) : ViewModel() {
     }
 
 
-    //TODO: Add var and methods to save and remove elections to local database
-    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
      */

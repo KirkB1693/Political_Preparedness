@@ -14,7 +14,7 @@
     <string name="state_ballot_text">Ballot Information</string>
     <string name="state_correspondence_header_text">Secretary of State</string>
     <string name="voter_info_address_text">555 Main St, Anytown, WI 99999</string>
-    <string name="representative_search_title">Represtntative Search</string>
+    <string name="representative_search_title">Representative Search</string>
     <string name="my_representatives_title">My Representatives</string>
     <string name="street_address_hint">address line 1</string>
     <string name="extended_address_hint">address line 2</string>
