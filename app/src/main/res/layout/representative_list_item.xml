@@ -21,6 +21,7 @@
         android:contentDescription="@string/representative_image_content_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:profileImage="@{representative.official.photoUrl}"
         app:srcCompat="@drawable/ic_profile" />
 
     <TextView
@@ -31,6 +32,7 @@
         android:layout_marginEnd="@dimen/default_margin"
         android:textSize="@dimen/text_size_small"
         android:textStyle="bold"
+        android:text="@{representative.office.name}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/representative_photo"
         app:layout_constraintTop_toTopOf="@+id/representative_photo"
@@ -43,6 +45,7 @@
         android:layout_marginTop="@dimen/padding_small"
         android:layout_marginEnd="@dimen/default_margin"
         android:textSize="@dimen/text_size_small"
+        android:text="@{representative.official.name}"
         app:layout_constraintEnd_toStartOf="@+id/www_icon"
         app:layout_constraintStart_toStartOf="@+id/representative_office_textview"
         app:layout_constraintTop_toBottomOf="@+id/representative_office_textview"
@@ -54,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin"
         android:textSize="@dimen/text_size_extra_small"
+        android:text="@{representative.official.party}"
         app:layout_constraintEnd_toStartOf="@+id/www_icon"
         app:layout_constraintStart_toStartOf="@+id/representative_officeholder_textview"
         app:layout_constraintTop_toBottomOf="@+id/representative_officeholder_textview"

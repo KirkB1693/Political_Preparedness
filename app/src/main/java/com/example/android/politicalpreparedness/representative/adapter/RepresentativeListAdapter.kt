@@ -23,8 +23,8 @@ class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewH
     }
 
     override fun onBindViewHolder(holder: RepresentativeViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        val representative = getItem(position)
+        holder.bind(representative)
     }
 }
 
@@ -37,7 +37,7 @@ class RepresentativeViewHolder(val binding: RepresentativeListItemBinding): Recy
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
         if (item.official.channels != null) showSocialLinks(item.official.channels)
-        if (item.official.urls != null) showWWWLinks(item.official.urls)
+        if (item.official.urls != null) {showWWWLinks(item.official.urls)} else {binding.wwwIcon.visibility = View.INVISIBLE}
 
         binding.executePendingBindings()
     }
@@ -57,10 +57,10 @@ class RepresentativeViewHolder(val binding: RepresentativeListItemBinding): Recy
 
     private fun showSocialLinks(channels: List<Channel>) {
         val facebookUrl = getFacebookUrl(channels)
-        if (!facebookUrl.isNullOrBlank()) { enableLink(binding.facebookIcon, facebookUrl) }
+        if (!facebookUrl.isNullOrBlank()) { enableLink(binding.facebookIcon, facebookUrl) } else {binding.facebookIcon.visibility = View.INVISIBLE}
 
         val twitterUrl = getTwitterUrl(channels)
-        if (!twitterUrl.isNullOrBlank()) { enableLink(binding.twitterIcon, twitterUrl) }
+        if (!twitterUrl.isNullOrBlank()) { enableLink(binding.twitterIcon, twitterUrl) }else {binding.twitterIcon.visibility = View.INVISIBLE}
     }
 
     private fun showWWWLinks(urls: List<String>) {
@@ -102,8 +102,4 @@ class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>(){
     }
 
 
-}
-
-class RepresentativeListener(val clickListener: (representative: Representative) -> Unit) {
-    fun onRepresentativeClick(representative: Representative) = clickListener(representative)
 }

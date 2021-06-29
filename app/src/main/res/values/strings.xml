@@ -24,6 +24,10 @@
     <string name="web_search_image_content_description">Web Search</string>
     <string name="facebook_image_content_description">Facebook</string>
     <string name="twitter_image_content_description">Twitter</string>
-    <string name="no_state_for_voter_info_error">Unable to get detailed voter info, no state was listed by the Civics API</string>
-
+    <string name="voter_info_error">Unable to get detailed voter info, error accessing the Civics API</string>
+    <string name="location_required_error">Location services must be enabled</string>
+    <string name="representative_serach_line1_error">Line 1 of address can\'t be blank</string>
+    <string name="representative_serach_city_error">City can\'t be blank</string>
+    <string name="representative_serach_state_error">State can\'t be blank, please select a state</string>
+    <string name="representative_serach_zip_error">The zip code can\'t be blank</string>
 </resources>

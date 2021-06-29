@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="address"
+            type="com.example.android.politicalpreparedness.network.models.Address" />
+        <variable
             name="viewModel"
             type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
     </data>
@@ -17,9 +20,12 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/representative_search_container"
-            android:layout_width="0dp"
+            android:id="@+id/representative_search_wrapper"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -29,8 +35,6 @@
                 style="@style/Header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
                 android:text="@string/representative_search_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,11 +44,10 @@
                 android:id="@+id/address_line_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
                 android:autofillHints="streetAddress"
                 android:hint="@string/street_address_hint"
                 android:inputType="textPostalAddress"
+                android:text="@{address.line1}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_title" />
@@ -53,11 +56,10 @@
                 android:id="@+id/address_line_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
                 android:autofillHints="extendedAddress"
                 android:hint="@string/extended_address_hint"
                 android:inputType="textPostalAddress"
+                android:text="@{address.line2}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/address_line_1" />
@@ -66,11 +68,11 @@
                 android:id="@+id/city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
                 android:autofillHints="addressLocality"
                 android:hint="@string/address_locality_hint"
                 android:inputType="textPostalAddress"
-                app:layout_constraintEnd_toStartOf="@id/state"
+                android:text="@{address.city}"
+                app:layout_constraintEnd_toStartOf="@+id/state"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/address_line_2" />
 
@@ -79,95 +81,87 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
                 android:autofillHints="addressRegion"
+                android:entries="@array/states"
                 android:inputType="textPostalAddress"
-                app:layout_constraintBottom_toBottomOf="@id/city"
+                app:layout_constraintBottom_toBottomOf="@+id/city"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/city"
-                app:layout_constraintTop_toTopOf="@id/city" />
+                app:layout_constraintStart_toEndOf="@+id/city"
+                app:layout_constraintTop_toTopOf="@+id/city"
+                app:stateValue="@{address.state}" />
 
             <EditText
                 android:id="@+id/zip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
                 android:autofillHints="postalCode"
                 android:hint="@string/postal_code_hint"
                 android:inputType="number"
                 android:maxLength="5"
+                android:text="@{address.zip}"
                 app:layout_constraintEnd_toEndOf="@id/city"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/city" />
-
 
             <Button
                 android:id="@+id/button_search"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
                 android:text="@string/find_my_representatives_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/zip" />
-
 
             <Button
                 android:id="@+id/button_location"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
                 android:text="@string/use_my_location_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/button_search" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <LinearLayout
-            android:id="@+id/representative_list_wrapper"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/representatives_wrapper"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/representative_search_container">
+            app:layout_constraintTop_toBottomOf="@id/representative_search_wrapper">
 
             <TextView
                 android:id="@+id/representative_title"
                 style="@style/Header"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/my_representatives_title" />
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:text="@string/my_representatives_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/representative_list_nestedScrollView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/representatives_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true"
-                >
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/representatives_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    tools:listitem="@layout/representative_list_item"/>
-
-
-
-            </androidx.core.widget.NestedScrollView>
-        </LinearLayout>
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/representative_title"
+                tools:listitem="@layout/representative_list_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>

@@ -36,7 +36,8 @@ class VoterInfoFragment : Fragment() {
         binding.fragment = this
 
         if (division.state.isNotEmpty()) {
-            viewModel.getVoterInfo(division.state, electionId)
+            val divisionAddress = "${division.state}, us"
+            viewModel.getVoterInfo(divisionAddress, electionId)
         } else {
             displayErrorMessage()
         }
@@ -54,6 +55,8 @@ class VoterInfoFragment : Fragment() {
                     binding.followOrUnfollowElectionButton.visibility = View.GONE
                 }
 
+            } else if (it.equals(VoterInfoApiStatus.ERROR)) {
+                displayErrorMessage()
             }
         })
 
@@ -111,7 +114,7 @@ class VoterInfoFragment : Fragment() {
     private fun displayErrorMessage() {
         binding.electionName.title = ""
         binding.electionDate.text = ""
-        binding.stateHeader.text = getString(R.string.no_state_for_voter_info_error)
+        binding.stateHeader.text = getString(R.string.voter_info_error)
         binding.address.visibility = View.GONE
         binding.stateCorrespondenceHeader.visibility = View.GONE
         binding.stateLocations.visibility = View.GONE

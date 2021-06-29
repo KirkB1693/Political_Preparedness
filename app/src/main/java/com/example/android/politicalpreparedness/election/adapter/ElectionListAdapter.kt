@@ -27,7 +27,7 @@ class ElectionListAdapter(private val clickListener: ElectionListener): ListAdap
 
 
     //**
-    // * Allows the RecyclerView to determine which items have changed when the [List] of [Asteroid]
+    // * Allows the RecyclerView to determine which items have changed when the [List] of [Election]
     // * has been updated.
     // */
     companion object ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
