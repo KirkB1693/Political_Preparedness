@@ -40,7 +40,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
 
@@ -133,9 +133,11 @@ class DetailFragment : Fragment() {
                 status.equals(RepresentativesApiStatus.LOADING) -> {
                     binding.representativesLoading.visibility = View.VISIBLE
                     binding.representativesLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.loading_animation))
+                    binding.representativesRecyclerview.visibility = View.INVISIBLE
                 }
                 status.equals(RepresentativesApiStatus.DONE) -> {
                     binding.representativesLoading.visibility = View.GONE
+                    binding.representativesRecyclerview.visibility = View.VISIBLE
                 }
                 status.equals(RepresentativesApiStatus.ERROR) -> {
                     binding.representativesLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_connection_error))

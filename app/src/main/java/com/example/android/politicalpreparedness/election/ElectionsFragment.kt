@@ -22,7 +22,7 @@ class ElectionsFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         binding = FragmentElectionBinding.inflate(inflater)
         binding.lifecycleOwner = this
@@ -67,9 +67,12 @@ class ElectionsFragment: Fragment() {
             when {
                 status.equals(ElectionsApiStatus.LOADING) -> {
                     binding.upcomingElectionsLoading.visibility = View.VISIBLE
+                    binding.upcomingElectionsLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.loading_animation))
+                    binding.upcomingElectionsRecyclerview.visibility = View.INVISIBLE
                 }
                 status.equals(ElectionsApiStatus.DONE) -> {
                     binding.upcomingElectionsLoading.visibility = View.GONE
+                    binding.upcomingElectionsRecyclerview.visibility = View.VISIBLE
                 }
                 status.equals(ElectionsApiStatus.ERROR) -> {
                     binding.upcomingElectionsLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_connection_error))
@@ -82,9 +85,11 @@ class ElectionsFragment: Fragment() {
                 status.equals(ElectionsApiStatus.LOADING) -> {
                     binding.savedElectionsLoading.visibility = View.VISIBLE
                     binding.savedElectionsLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.loading_animation))
+                    binding.savedElectionsRecyclerview.visibility = View.INVISIBLE
                 }
                 status.equals(ElectionsApiStatus.DONE) -> {
                     binding.savedElectionsLoading.visibility = View.GONE
+                    binding.savedElectionsRecyclerview.visibility = View.VISIBLE
                 }
                 status.equals(ElectionsApiStatus.ERROR) -> {
                     binding.savedElectionsLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_broken_image))

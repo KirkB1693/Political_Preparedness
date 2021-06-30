@@ -30,4 +30,7 @@
     <string name="representative_serach_city_error">City can\'t be blank</string>
     <string name="representative_serach_state_error">State can\'t be blank, please select a state</string>
     <string name="representative_serach_zip_error">The zip code can\'t be blank</string>
+    <string name="upcoming_elections_loading_content_description">Upcoming elections are loading</string>
+    <string name="saved_elections_loading_content_description">Saved elections are loading</string>
+    <string name="representatives_loading_content_description">Representatives are loading</string>
 </resources>

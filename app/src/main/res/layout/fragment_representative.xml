@@ -166,6 +166,7 @@
                 android:id="@+id/representatives_loading"
                 android:layout_width="@dimen/loading_icon_size"
                 android:layout_height="@dimen/loading_icon_size"
+                android:contentDescription="@string/representatives_loading_content_description"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/representatives_recyclerview"
                 app:layout_constraintEnd_toEndOf="@+id/representatives_recyclerview"
