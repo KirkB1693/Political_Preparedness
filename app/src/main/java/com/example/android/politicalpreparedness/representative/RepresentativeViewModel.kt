@@ -10,7 +10,13 @@ import com.example.android.politicalpreparedness.representative.model.Representa
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
+enum class RepresentativesApiStatus { LOADING, ERROR, DONE }
+
 class RepresentativeViewModel : ViewModel() {
+
+    private val _statusRepresentatives = MutableLiveData<RepresentativesApiStatus>()
+    val statusRepresentatives: LiveData<RepresentativesApiStatus>
+        get() = _statusRepresentatives
 
     private val _address = MutableLiveData<Address>()
     val address: LiveData<Address>
@@ -30,15 +36,17 @@ class RepresentativeViewModel : ViewModel() {
     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
-    fun getRepresentativesList(address: Address) {
+    fun getRepresentativesList() {
+        _statusRepresentatives.value = RepresentativesApiStatus.LOADING
         viewModelScope.launch {
             try {
                 val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(getAddressFormattedForApi())
                 _representatives.value =
                     offices.flatMap { office -> office.getRepresentatives(officials) }
-
+                _statusRepresentatives.value = RepresentativesApiStatus.DONE
             } catch (e: Exception) {
                 _representatives.value = ArrayList()
+                _statusRepresentatives.value = RepresentativesApiStatus.ERROR
             }
         }
     }

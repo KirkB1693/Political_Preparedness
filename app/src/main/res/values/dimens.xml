@@ -16,6 +16,7 @@
     <dimen name="clickable_icon_size">30dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="text_size_extra_small">12sp</dimen>
+    <dimen name="loading_icon_size">100dp</dimen>
 
 
 </resources>

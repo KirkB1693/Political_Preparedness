@@ -20,6 +20,5 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- TODO: Add necessary styles -->
 
 </resources>

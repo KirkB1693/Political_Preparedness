@@ -9,30 +9,25 @@ import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.google.android.gms.location.LocationServices
-import java.util.Locale
+import java.util.*
 
 class DetailFragment : Fragment() {
 
-    private val TAG = DetailFragment::class.java.simpleName
     private lateinit var binding: FragmentRepresentativeBinding
     private val viewModel: RepresentativeViewModel by lazy {
         ViewModelProvider(this).get(RepresentativeViewModel::class.java)
     }
     private lateinit var representativeAdapter: RepresentativeListAdapter
-    private lateinit var stateSpinner: Spinner
 
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1
@@ -85,7 +80,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeAddress() {
-        viewModel.address.observe(viewLifecycleOwner, Observer {
+        viewModel.address.observe(viewLifecycleOwner,  {
             binding.address = it
         })
     }
@@ -129,10 +124,25 @@ class DetailFragment : Fragment() {
             return
         }
         viewModel.setAddressFromFields(line1, line2, city, state, zip)
-        viewModel.address.value?.let { viewModel.getRepresentativesList(it) }
+        viewModel.address.value?.let { viewModel.getRepresentativesList() }
     }
 
     private fun observeRepresentatives() {
+        viewModel.statusRepresentatives.observe(viewLifecycleOwner, { status ->
+            when {
+                status.equals(RepresentativesApiStatus.LOADING) -> {
+                    binding.representativesLoading.visibility = View.VISIBLE
+                    binding.representativesLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.loading_animation))
+                }
+                status.equals(RepresentativesApiStatus.DONE) -> {
+                    binding.representativesLoading.visibility = View.GONE
+                }
+                status.equals(RepresentativesApiStatus.ERROR) -> {
+                    binding.representativesLoading.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_connection_error))
+                }
+            }
+        })
+
         viewModel.representatives.observe(viewLifecycleOwner, { representatives ->
             representativeAdapter.submitList(representatives)
         })
@@ -195,7 +205,7 @@ class DetailFragment : Fragment() {
                         currentAddress.state,
                         currentAddress.zip
                     )
-                    viewModel.getRepresentativesList(currentAddress)
+                    viewModel.getRepresentativesList()
                 }
             }
 

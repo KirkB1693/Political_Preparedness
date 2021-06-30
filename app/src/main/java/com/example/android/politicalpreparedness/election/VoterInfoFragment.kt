@@ -3,9 +3,10 @@ package com.example.android.politicalpreparedness.election
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
@@ -42,7 +43,7 @@ class VoterInfoFragment : Fragment() {
             displayErrorMessage()
         }
 
-        viewModel.voterInfoStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.voterInfoStatus.observe(viewLifecycleOwner, {
             if (it.equals(VoterInfoApiStatus.DONE)) {
                 val voterInfo = viewModel.voterInfo.value
                 if (voterInfo != null) {
@@ -60,7 +61,7 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        viewModel.ballotInformationUrl.observe(viewLifecycleOwner, Observer {
+        viewModel.ballotInformationUrl.observe(viewLifecycleOwner, {
             if (it.isNullOrEmpty()) {
                 binding.stateBallot.visibility = View.GONE
              } else {
@@ -68,7 +69,7 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        viewModel.votingLocationsUrl.observe(viewLifecycleOwner, Observer {
+        viewModel.votingLocationsUrl.observe(viewLifecycleOwner,  {
             if (it.isNullOrEmpty()) {
                 binding.stateLocations.visibility = View.GONE
             } else {
@@ -78,7 +79,7 @@ class VoterInfoFragment : Fragment() {
 
 
         viewModel.initializeIsElectionSaved(electionId)
-        viewModel.isElectionSaved.observe(viewLifecycleOwner, Observer {
+        viewModel.isElectionSaved.observe(viewLifecycleOwner, {
             if (it) {
                 displayUnfollowButton()
             } else {

@@ -51,6 +51,17 @@
                 app:electionListData="@{viewModel.upcomingElections}"/>
         </androidx.core.widget.NestedScrollView>
 
+        <ImageView
+            android:id="@+id/upcoming_elections_loading"
+            android:layout_width="@dimen/loading_icon_size"
+            android:layout_height="@dimen/loading_icon_size"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/upcoming_elections_nestedScrollView"
+            app:layout_constraintEnd_toEndOf="@+id/upcoming_elections_nestedScrollView"
+            app:layout_constraintStart_toStartOf="@+id/upcoming_elections_nestedScrollView"
+            app:layout_constraintTop_toTopOf="@+id/upcoming_elections_nestedScrollView"
+            app:srcCompat="@drawable/loading_animation" />
+
         <TextView
             android:id="@+id/saved_elections_header_textview"
             style="@style/Header"
@@ -89,6 +100,17 @@
                 tools:listitem="@layout/election_list_item"
                 app:electionListData="@{viewModel.savedElections}"/>
         </androidx.core.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/saved_elections_loading"
+            android:layout_width="@dimen/loading_icon_size"
+            android:layout_height="@dimen/loading_icon_size"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/saved_elections_nestedScrollView"
+            app:layout_constraintEnd_toEndOf="@+id/saved_elections_nestedScrollView"
+            app:layout_constraintStart_toStartOf="@+id/saved_elections_nestedScrollView"
+            app:layout_constraintTop_toTopOf="@+id/saved_elections_nestedScrollView"
+            app:srcCompat="@drawable/loading_animation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
