@@ -7,4 +7,4 @@ in the app level build.gradle file with a valid google civics API key.***
 
 This project shows all upcoming US elections and allows the user to follow elections, navigate to web pages with 
 the appropriate voter information for each election, and lets the users find all representatives for the current 
-location or any location entered byt the user.
+location or any location entered by the user.
